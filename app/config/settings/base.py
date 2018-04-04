@@ -25,10 +25,15 @@ SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
 SECRETS_LOCAL = os.path.join(SECRETS_DIR, 'local.json')
 SECRETS_DEV = os.path.join(SECRETS_DIR, 'dev.json')
 SECRETS_PRODUCTION = os.path.join(SECRETS_DIR, 'production.json')
-# secrets = json.loads(open(SECRETS_BASE, 'rt').read())
 SECRETS = json.loads(open(SECRETS_BASE, 'rt').read())
 TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
+AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = SECRETS['AWS_STORAGE_BUCKET_NAME']
+AWS_DEFAULT_ACL = 'private'
+AWS_S3_REGION_NAME = 'ap-northeast-2'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 def set_config(obj, module_name=None, start=False):
     """
@@ -83,7 +88,7 @@ def set_config(obj, module_name=None, start=False):
             # 그 외의 경우 value를 평가한 값을 할당
             else:
                 obj[key] = eval_obj(value)
-               # set_config()가 처음 호출된 loop에서만 setattr()을 실행
+            # set_config()가 처음 호출된 loop에서만 setattr()을 실행
             if start:
                 setattr(sys.modules[module_name], key, value)
 
@@ -99,31 +104,29 @@ def set_config(obj, module_name=None, start=False):
 # import raven이라고 쓸 경우 Code reformating에서 필요없는 import로 인식해서 지워짐
 # raven모듈을 importlib를 사용해 가져온 후 현재 모듈에 'raven'이라는 이름으로 할당
 setattr(sys.modules[__name__], 'raven', importlib.import_module('raven'))
-# set_config(secrets, module_name=__name__, start=True)
-SECRET_KEY = SECRETS['SECRET_KEY']
-# print(f'SECRET_KEY:{getattr(sys.modules[__name__],"SECRET_KEY")}')
-# print(f'RAVEN_CONFIG:{getattr(sys.modules[__name__],"RAVEN_CONFIG")}')
 
+SECRET_KEY = SECRETS['SECRET_KEY']
+
+AUTHENTICATION_BACKENDS =[
+    'django.contrib.auth.backends.ModelBackend',
+    'members.backends.APIFacebookBackends',
+]
 # Raven
 RAVEN_CONFIG = {
     'dsn': SECRETS['RAVEN_DSN'],
     'release': raven.fetch_git_sha(os.path.dirname(BASE_DIR)),
-    # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
-    # 'release': raven.fetch_git_sha(os.path.abspath(BASE_DIR)),
-    # 'release': raven.fetch_git_sha(os.path.dirname(__file__)),
 }
-print(RAVEN_CONFIG)
 STATIC_URL = '/static/'
 
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 
 MEDIA_URL = '/media/'
-
 
 # Application definition
 
@@ -136,9 +139,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # Sentry
     'raven.contrib.django.raven_compat',
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    'blog',
+    'homepage',
     'members',
+    'reservation',
+    'travel',
     'utils',
 ]
 
@@ -151,6 +162,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+
+}
 
 ROOT_URLCONF = 'config.urls'
 
@@ -179,6 +198,11 @@ TEMPLATES = [
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'OPTIONS': {
+            'user_attributes': (
+                'username', 'email', 'first_name', 'last_name',
+            ),
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
