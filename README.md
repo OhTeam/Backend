@@ -1,12 +1,9 @@
-# EB Docker deploy
-
-Eb Docker  배포를 연습하는 프로젝트입니다.
-`.secrets`폴더내의 파일로 비밀 키를 관리합니다.
-
-DB로 PostgreSQL을 사용하며, `local`환경에서는 `localhost`의 DB, `dev`환경과 `production`환경에서는 `AWS RDS`의 DB를 사용합니다.
+# My Small Trip
+- 
+- `.secrets`폴더내의 파일로 비밀 키를 관리합니다.
+- DB로 PostgreSQL을 사용하며, `local`환경에서는 `localhost`의 DB, `dev`환경과 `production`환경에서는 `AWS RDS`의 DB를 사용합니다.
 
 ## Requirements
-
 - Python (3.6)
 - PostgreSQL
 
@@ -105,7 +102,9 @@ FROM    <사용자명>/<저장소명>:base
   "AWS_STORAGE_BUCKET_NAME":"<AWS_BUCKET_NAME>",
   "AWS_S3_REGION_NAME":"<region name>, default='ap-northeast-2'",
   "AWS_S3_SIGNATURE_VERSION":"<version>, default: s3v4",
-  "AWS_DEFAULT_ACL":"private"
+  "AWS_DEFAULT_ACL":"private",
+  "API_KEY": "COOLSMS API KEY",
+  "API_SECRET": "COOLSMS API SECRET"
 }
 
 ```
@@ -129,5 +128,6 @@ FROM    <사용자명>/<저장소명>:base
   }
 }
 ```
+
 **`.secrets/prodjction.json`**
 #dev와 동일
