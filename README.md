@@ -1,7 +1,24 @@
 # My Small Trip
-- 
-- `.secrets`폴더내의 파일로 비밀 키를 관리합니다.
-- DB로 PostgreSQL을 사용하며, `local`환경에서는 `localhost`의 DB, `dev`환경과 `production`환경에서는 `AWS RDS`의 DB를 사용합니다.
+사진 찍고 오는 여행 No! 발자국만 찍고 돌고 오는 여행 No! 진정한 여행이란? 나의 여행 후기를 들려 주었을때, 듣는 사람으로 하여금 마치 그곳을 여행 다녀온듯한 느낌을 줄수 있는가? 여러분의 영원히 기억될 여행추억 with My Small Trip 입니다. 
+
+## 프로젝트 소개
+ 4개월 동안 웹 프로그래밍 스쿨에서 배운 기술과 IOS 협업을 통해 `My Small Trip` 앱을 개발
+ 
+## 프로젝트 구성
+- 프로젝트 팀구성 : 백엔드2명, IOS 앱개발 3명
+- 역할 : 서버세팅 및 배포, API작성
+- 사용 언어 :
+  - 공통 : Git, Postman, Slack, Zeplin
+  - 백엔드 : Python , Django, PostgreSQL, Django-Rest-Framework, AWS EC2, S3, RDS, Elastic Beanstalk, Docker, Sentry,
+- 주요내용:
+  - 백엔드 ( local / dev / production ) 별 개발 환경 분리
+  - 나라별, 도시별, 여행상품 리스트 보여주기
+  - 상품예약, 취소하기,예약현황에 따른 예약가능 캘린더 보여주기 기능
+  - 로그인/로그아웃/페이스북 로그인/비밀번호변경(문자인증)
+  - 이용한 상품별 후기작성/수정/삭제 기능
+  - 위시리스트, 상품별 검색 기능
+  - `.secrets`폴더내의 파일로 비밀 키를 관리합니다.
+  - DB로 PostgreSQL을 사용하며, `local`환경에서는 `localhost`의 DB, `dev`환경과 `production`환경에서는 `AWS RDS`의 DB를 사용합니다.
 
 ## Requirements
 - Python (3.6)
@@ -130,4 +147,4 @@ FROM    <사용자명>/<저장소명>:base
 ```
 
 **`.secrets/prodjction.json`**
-#dev와 동일
+- dev와 동일
