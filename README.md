@@ -7,7 +7,7 @@
 ## 프로젝트 구성
 - 프로젝트 팀구성 : 백엔드2명, IOS 앱개발 3명
 - 역할 : 서버세팅 및 배포, API작성
-- 사용 언어 :
+- 사용 언어 및 프로그램
   - 공통 : Git, Postman, Slack, Zeplin
   - 백엔드 : Python , Django, PostgreSQL, Django-Rest-Framework, AWS EC2, S3, RDS, Elastic Beanstalk, Docker, Sentry,
 - 주요내용:
