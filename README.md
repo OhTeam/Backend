@@ -20,6 +20,8 @@
   - `.secrets`폴더내의 파일로 비밀 키를 관리합니다.
   - DB로 PostgreSQL을 사용하며, `local`환경에서는 `localhost`의 DB, `dev`환경과 `production`환경에서는 `AWS RDS`의 DB를 사용합니다.
 
+## 프로젝트 동영상 
+[동영상](https://youtu.be/Q6kqeCazA8M)
 ## 프로젝트 API
 [API GIT BOOK](https://kahee.gitbooks.io/my-small-trip/content/)
 
